@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ponto do Dia — diagonal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f5ead8; --navy:#002776; --navy-h:#0a3a9e;
+  --green:#009739; --green-d:#00432a; --yellow:#ffdf00; --yellow-a:#e6c800; --ink:#201e1d;
+  --display:Caprasimo,Georgia,serif;
+  --sans:Figtree,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ang:-29.4deg;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--cream);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+
+.meta{font-weight:600;font-size:clamp(9px,.95vw,10px);line-height:1;letter-spacing:.34em;text-transform:uppercase}
+
+.stage{position:fixed;inset:0;overflow:hidden}
+.navy{position:absolute;inset:0;background:var(--navy);clip-path:polygon(0 0,100% 0,0 100%)}
+.green{position:absolute;inset:0;background:var(--green);clip-path:polygon(100% 0,100% 100%,0 100%)}
+.grain{position:absolute;inset:0;z-index:5;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
+  background-image:radial-gradient(rgba(32,30,29,.22) 1px,transparent 1.1px);background-size:4px 4px}
+
+/* ---- a faixa diagonal com o tema ---- */
+.band{position:absolute;left:-15%;width:130%;top:50%;z-index:1;
+  transform:translateY(-50%) rotate(var(--ang));
+  background:var(--cream);display:flex;align-items:center;
+  min-height:clamp(84px,16vh,134px);
+  padding:clamp(12px,1.8vh,20px) 4% clamp(12px,1.8vh,20px) 27%}
+#theme{font-family:var(--display);font-weight:400;color:var(--navy);
+  font-size:clamp(20px,4.2vw,54px);line-height:1.02;letter-spacing:-.02em;
+  max-width:44%;text-wrap:balance}
+#theme.long{font-size:clamp(17px,3.1vw,40px);max-width:48%}
+#theme.xlong{font-size:clamp(15px,2.5vw,32px);max-width:52%}
+
+/* ---- a bola, com o cronômetro dentro ---- */
+.ballwrap{position:absolute;right:clamp(16px,9vw,132px);top:46%;z-index:2;
+  transform:translateY(-50%);width:clamp(168px,25vw,318px);aspect-ratio:1}
+.ballshadow{position:absolute;inset:0;border-radius:999px;background:var(--green-d);opacity:.8;
+  transform:translate(20.5%,20.5%);z-index:1}
+.ball{position:absolute;inset:0;border-radius:999px;background:var(--yellow);
+  overflow:hidden;z-index:2;display:grid;place-items:center}
+/* a bola vai enchendo de um amarelo mais escuro conforme o tempo passa */
+#fill{position:absolute;left:0;right:0;bottom:0;height:0;display:block;
+  background:var(--yellow-a);z-index:0;will-change:height}
+.seam{position:absolute;left:-24.3%;top:-6.5%;width:100%;height:114%;
+  border-right:8px solid var(--cream);border-radius:999px;z-index:1}
+.ballin{position:relative;z-index:2;text-align:center;padding:0 12%}
+#clock{font-family:var(--display);font-weight:400;color:var(--navy);
+  line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;
+  font-size:clamp(34px,5.6vw,68px)}
+
+/* ---- etiquetas ---- */
+.tl{position:absolute;left:clamp(20px,4vw,56px);top:clamp(20px,4.4vh,44px);z-index:6;
+  display:flex;flex-direction:column;gap:clamp(10px,1.6vh,16px);color:var(--cream)}
+.tl .dim{opacity:.7}
+
+.br{position:absolute;right:clamp(20px,4vw,56px);bottom:clamp(18px,4vh,40px);z-index:6;
+  display:flex;flex-direction:column;align-items:flex-end;gap:clamp(12px,2vh,18px);color:var(--cream)}
+.br .labels{display:flex;gap:clamp(14px,2vw,26px);align-items:baseline}
+#acts{display:flex;gap:clamp(8px,1.2vw,14px);justify-content:flex-end;flex-wrap:wrap}
+.links{display:flex;gap:clamp(12px,1.8vw,20px);align-items:center}
+.links a.tiny{color:var(--cream);text-decoration:none;border-bottom:2px solid rgba(245,234,216,.65);padding-bottom:2px}
+.links a.tiny:hover{border-bottom-color:var(--cream)}
+
+.pill{font-family:var(--display);font-weight:400;cursor:pointer;
+  border:3px solid var(--cream);background:transparent;color:var(--cream);
+  font-size:clamp(13px,1.5vw,17px);letter-spacing:.06em;border-radius:999px;
+  padding:clamp(11px,1.7vh,16px) clamp(18px,2.4vw,42px);white-space:nowrap;
+  transition:background .12s,color .12s,border-color .12s}
+.pill:hover{background:var(--yellow);border-color:var(--yellow);color:var(--navy)}
+.pill:active{background:var(--yellow-a);border-color:var(--yellow-a)}
+.pill.primary{background:var(--cream);color:var(--navy)}
+.pill.primary:hover{background:var(--yellow);border-color:var(--yellow)}
+.pill:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+a.pill{text-decoration:none;display:inline-block}
+
+/* ---- retrato / telas estreitas: faixa reta ---- */
+@media(max-width:900px),(orientation:portrait){
+  .band{transform:translateY(-50%);left:0;width:100%;padding:clamp(16px,3vh,26px) 6%;
+    justify-content:center;text-align:center;min-height:clamp(96px,18vh,150px)}
+  #theme,#theme.long,#theme.xlong{max-width:100%;text-align:center}
+  #theme{font-size:clamp(20px,5.6vw,40px)}
+  #theme.long{font-size:clamp(17px,4.6vw,32px)}
+  #theme.xlong{font-size:clamp(15px,3.8vw,26px)}
+  .ballwrap{right:auto;left:50%;top:22%;transform:translate(-50%,-50%);width:clamp(130px,34vw,200px)}
+  .br{left:clamp(16px,4vw,56px);align-items:stretch}
+  #acts{flex-direction:column}
+  #acts .pill,a.pill{width:100%;text-align:center}
+  .br .labels{justify-content:space-between}
+  .links{flex-direction:column;align-items:stretch;gap:clamp(8px,1.4vh,12px)}
+  .links a.tiny{align-self:flex-end;letter-spacing:.24em;white-space:nowrap}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-phase="idle">
+
+<div class="stage">
+  <div class="navy"></div>
+  <div class="green"></div>
+
+  <div class="band">
+    <div id="theme">Aperte sortear</div>
+  </div>
+
+  <div class="ballwrap">
+    <div class="ballshadow"></div>
+    <div class="ball">
+      <i id="fill"></i>
+      <div class="seam"></div>
+      <div class="ballin">
+        <div id="clock">15:00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grain"></div>
+
+  <div class="tl meta">
+    <span>Ponto do dia</span>
+    <span class="dim">Falando de tênis até encontrar o João Fonseca</span>
+  </div>
+
+  <div class="br">
+    <div class="labels meta">
+      <span id="state"></span>
+    </div>
+    <div id="acts"></div>
+    <div class="links">
+      <a class="pill" href="https://tally.so/r/Np1RQW" target="_blank" rel="noopener">Sugerir um tema</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* a faixa acompanha a diagonal da tela */
+(function () {
+  function ang() {
+    var a = -Math.atan2(innerHeight, innerWidth) * 180 / Math.PI;
+    document.documentElement.style.setProperty("--ang", a.toFixed(2) + "deg");
+  }
+  addEventListener("resize", ang, { passive: true });
+  ang();
+})();
+</script>
+<script src="data/themes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
