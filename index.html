@@ -60,6 +60,9 @@ body{background:var(--cream);font-family:var(--sans);-webkit-font-smoothing:anti
 .tl{position:absolute;left:clamp(20px,4vw,56px);top:clamp(20px,4.4vh,44px);z-index:6;
   display:flex;flex-direction:column;gap:clamp(10px,1.6vh,16px);color:var(--cream)}
 .tl .dim{opacity:.7}
+/* "Ponto do dia" maior que a frase de baixo */
+.tl span:first-child{font-size:clamp(15px,1.7vw,22px);letter-spacing:.28em}
+.tl .dim{font-size:clamp(11px,1.1vw,14px);line-height:1.5}
 
 .br{position:absolute;right:clamp(20px,4vw,56px);bottom:clamp(18px,4vh,40px);z-index:6;
   display:flex;flex-direction:column;align-items:flex-end;gap:clamp(12px,2vh,18px);color:var(--cream)}
@@ -87,7 +90,8 @@ a.pill{text-decoration:none;display:inline-block}
 @media(max-width:900px),(orientation:portrait){
   /* topo: etiquetas à esquerda, botão de sugestão pequeno à direita */
   .tl{left:20px;top:22px;max-width:52%;gap:8px}
-  .tl .dim{line-height:1.6;letter-spacing:.26em}
+  .tl .dim{line-height:1.6;letter-spacing:.26em;font-size:11px}
+  .tl span:first-child{font-size:16px;letter-spacing:.24em}
   .suggest-link{right:16px;top:16px}
   a.pill.suggest-link{width:auto}
 
