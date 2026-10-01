@@ -38,6 +38,9 @@ body{background:var(--cream);font-family:var(--sans);-webkit-font-smoothing:anti
   max-width:44%;text-wrap:balance}
 #theme.long{font-size:clamp(17px,3.1vw,40px);max-width:48%}
 #theme.xlong{font-size:clamp(15px,2.5vw,32px);max-width:52%}
+/* clicar na faixa também sorteia */
+body[data-phase="idle"] .band,
+body[data-phase="done"] .band{cursor:pointer}
 
 /* ---- a bola, com o cronômetro dentro ---- */
 .ballwrap{position:absolute;right:clamp(16px,9vw,132px);top:46%;z-index:2;
@@ -127,7 +130,7 @@ a.pill{text-decoration:none;display:inline-block}
   <div class="navy"></div>
   <div class="green"></div>
 
-  <div class="band">
+  <div class="band" data-draw>
     <div id="theme">Aperte sortear</div>
   </div>
 
