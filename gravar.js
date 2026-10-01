@@ -54,7 +54,6 @@
     ".pill.gv-open{background:var(--yellow);border-color:var(--yellow);color:var(--navy)}" +
     ".pill.gv-open:hover{background:var(--cream);border-color:var(--cream)}" +
     ".pill.gv-done,.pill.gv-done:hover{background:var(--yellow);border-color:var(--yellow);color:var(--navy);cursor:default}" +
-    ".gv-tag{color:var(--yellow)!important;opacity:1!important}" +
     ".gv-veil{position:fixed;inset:0;z-index:20;background:rgba(0,39,118,.55);display:grid;place-items:center;padding:16px}" +
     ".gv-box{background:var(--cream);color:var(--navy);border-radius:28px;width:min(560px,100%);max-height:86vh;" +
       "display:flex;flex-direction:column;padding:clamp(22px,4vh,34px) clamp(20px,3vw,34px);gap:16px}" +
@@ -194,9 +193,6 @@
   document.addEventListener("DOMContentLoaded", function () {
     document.title = "Ponto do Dia — gravação";
     acts = document.getElementById("acts");
-
-    var dim = document.querySelector(".tl .dim");
-    if (dim) { dim.textContent = "Modo gravação"; dim.classList.add("gv-tag"); }
 
     openBtn = document.createElement("button");
     openBtn.type = "button";
