@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>Ponto do Dia — gravação</title>
+</head>
+<body style="background:#002776">
+<script>
+/* MODO GRAVAÇÃO — só para o Yoon.
+   Esta página não tem design próprio: ela pega o index.html (o site público),
+   coloca o gravar.js antes do app.js e mostra o resultado.
+   Assim, qualquer mudança no site público aparece aqui sozinha. */
+fetch("index.html", { cache: "no-store" })
+  .then(function (r) { return r.text(); })
+  .then(function (html) {
+    var hook = '<script src="data/themes.js"><\/script>';
+    if (html.indexOf(hook) < 0) throw new Error("não achei o themes.js no index.html");
+    html = html.replace(hook, hook + '<script src="gravar.js"><\/script>')
+               .replace("<title>", '<meta name="robots" content="noindex,nofollow"><title>');
+    document.open(); document.write(html); document.close();
+  })
+  .catch(function (e) {
+    document.body.style.cssText = "background:#f5ead8;color:#002776;font:16px system-ui;padding:40px";
+    document.body.textContent = "Não consegui abrir o modo gravação: " + e.message;
+  });
+</script>
+</body>
+</html>

@@ -76,3 +76,13 @@ http://localhost:8477 (quadra) e http://localhost:8477/diagonal.html (diagonal).
 
 Creme `#f5ead8` · azul `#002776` · verde `#009739` · amarelo `#ffdf00` · verde escuro `#00432a`
 Títulos e botões em **Caprasimo**, etiquetas em **Figtree**. Trama de meio-tom por cima de tudo.
+
+## Modo gravação (só pra mim)
+
+Abra `/gravar.html` em vez da página normal. Ninguém vê esse modo: ele não aparece em nenhum link.
+
+- A roleta não sorteia os temas que já foram gravados.
+- No fim do ponto aparece o botão **Gravei ✓**. O tema só sai da roleta quando você aperta.
+- O botão **Gravados X/40** (no canto de cima) abre o histórico: desfazer, baixar backup, restaurar backup, recomeçar.
+- O histórico fica salvo **só no navegador** em que você grava. Baixe um backup de vez em quando.
+- Arquivos: `gravar.html` (abre o site normal e liga o modo) e `gravar.js` (o modo em si). O site público não usa nenhum dos dois.
